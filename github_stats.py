@@ -332,13 +332,12 @@ Languages:
 
                 for lang in repo.get("languages", {}).get("edges", []):
                     name = lang.get("node", {}).get("name", "Other")
-                    languages = await self.languages
                     if name in self._exclude_langs: continue
-                    if name in languages:
-                        languages[name]["size"] += lang.get("size", 0)
-                        languages[name]["occurrences"] += 1
+                    if name in self._languages:
+                        self._languages[name]["size"] += lang.get("size", 0)
+                        self._languages[name]["occurrences"] += 1
                     else:
-                        languages[name] = {
+                        self._languages[name] = {
                             "size": lang.get("size", 0),
                             "occurrences": 1,
                             "color": lang.get("node", {}).get("color")
